@@ -1,96 +1,160 @@
 const API = "https://connectsphere-9181.onrender.com";
 
-const postBtn = document.querySelector(".post-btn");
-const postContainer = document.querySelector(".posts-container");
-
-postBtn.addEventListener("click", createPost);
+const postsContainer = document.getElementById("posts");
 
 async function createPost() {
-  const username = document.querySelector(".username-input").value;
-  const content = document.querySelector(".post-input").value;
-  const image = document.querySelector(".image-input").value;
 
-  if (!username || !content) {
-    alert("Please fill all fields");
-    return;
-  }
+    const username = document.getElementById("username").value;
 
-  const postData = {
-    username,
-    content,
-    image
-  };
+    const content = document.getElementById("postInput").value;
 
-  try {
-    const res = await fetch(`${API}/posts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(postData)
-    });
+    const image = document.getElementById("imageInput").value;
 
-    const data = await res.json();
+    if (!username || !content) {
+        alert("Please enter username and content");
+        return;
+    }
 
-    addPostToUI(data);
+    const postData = {
+        username,
+        content,
+        image
+    };
 
-    document.querySelector(".post-input").value = "";
-    document.querySelector(".image-input").value = "";
+    try {
 
-  } catch (err) {
-    console.log(err);
-  }
+        const response = await fetch(`${API}/posts`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postData)
+        });
+
+        const data = await response.json();
+
+        addPostToUI(data);
+
+        document.getElementById("postInput").value = "";
+        document.getElementById("imageInput").value = "";
+
+    } catch (error) {
+
+        console.log(error);
+        alert("Error creating post");
+
+    }
+
 }
 
 function addPostToUI(post) {
-  const div = document.createElement("div");
 
-  div.classList.add("post-card");
+    const postCard = document.createElement("div");
 
-  div.innerHTML = `
-    <div class="post-header">
-      <img src="https://i.pravatar.cc/40" class="post-avatar">
-      <h3>@${post.username}</h3>
-    </div>
+    postCard.className = "post-card";
 
-    <p class="post-text">${post.content}</p>
+    postCard.innerHTML = `
 
-    ${
-      post.image
-        ? `<img src="${post.image}" class="post-image">`
-        : ""
-    }
+        <div class="post-header">
 
-    <div class="post-actions">
-      <button onclick="likePost(this)">❤️ Like</button>
-      <button onclick="commentPost()">💬 Comment</button>
-      <button onclick="followUser()">➕ Follow</button>
-    </div>
-  `;
+            <img
+                class="post-avatar"
+                src="https://i.pravatar.cc/100"
+            >
 
-  postContainer.prepend(div);
+            <div>
+                <h3>${post.username}</h3>
+                <span>Just now</span>
+            </div>
+
+        </div>
+
+        <p class="post-content">
+            ${post.content}
+        </p>
+
+        ${
+            post.image
+                ? `<img class="post-image" src="${post.image}">`
+                : ""
+        }
+
+        <div class="post-actions">
+
+            <button onclick="likePost(this)">
+                ❤️ Like
+            </button>
+
+            <button onclick="commentPost()">
+                💬 Comment
+            </button>
+
+            <button onclick="followUser(this)">
+                ➕ Follow
+            </button>
+
+        </div>
+
+    `;
+
+    postsContainer.prepend(postCard);
+
 }
 
-function likePost(btn) {
-  btn.innerHTML = "❤️ Liked";
+function likePost(button) {
+
+    if (button.innerHTML === "❤️ Like") {
+
+        button.innerHTML = "❤️ Liked";
+
+    } else {
+
+        button.innerHTML = "❤️ Like";
+
+    }
+
 }
 
 function commentPost() {
-  alert("Comment feature coming soon");
+
+    alert("Comment feature coming soon 🚀");
+
 }
 
-function followUser() {
-  alert("Followed user");
+function followUser(button) {
+
+    if (button.innerHTML === "➕ Follow") {
+
+        button.innerHTML = "✔ Following";
+
+    } else {
+
+        button.innerHTML = "➕ Follow";
+
+    }
+
 }
 
-window.onload = async () => {
-  try {
-    const res = await fetch(`${API}/posts`);
-    const posts = await res.json();
+async function loadPosts() {
 
-    posts.reverse().forEach(addPostToUI);
+    try {
 
-  } catch (err) {
-    console.log(err);
-  }
-};
+        const response = await fetch(`${API}/posts`);
+
+        const posts = await response.json();
+
+        posts.reverse().forEach(post => {
+
+            addPostToUI(post);
+
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+loadPosts();
