@@ -1,134 +1,96 @@
 const API = "https://connectsphere-9181.onrender.com";
 
-const postsDiv = document.getElementById("posts");
+const postBtn = document.querySelector(".post-btn");
+const postContainer = document.querySelector(".posts-container");
 
-async function loadPosts(){
+postBtn.addEventListener("click", createPost);
 
-    const res = await fetch(`${API}/posts`);
+async function createPost() {
+  const username = document.querySelector(".username-input").value;
+  const content = document.querySelector(".post-input").value;
+  const image = document.querySelector(".image-input").value;
 
-    const posts = await res.json();
+  if (!username || !content) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    postsDiv.innerHTML = "";
+  const postData = {
+    username,
+    content,
+    image
+  };
 
-    posts.forEach(post=>{
-
-        const div = document.createElement("div");
-
-        div.classList.add("post");
-
-        let commentsHTML = "";
-
-        post.comments.forEach(comment=>{
-            commentsHTML += `<div class="comment">💬 ${comment}</div>`;
-        });
-
-        div.innerHTML = `
-
-        <div class="post-header">
-
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200">
-
-            <div>
-                <h3>${post.username}</h3>
-                <small>${new Date(post.createdAt).toLocaleString()}</small>
-            </div>
-
-        </div>
-
-        <div class="post-content">
-            <p>${post.content}</p>
-        </div>
-
-        <img
-            class="post-image"
-            src="https://picsum.photos/600/400?random=${Math.random()}"
-        >
-
-        <div class="actions">
-
-            <button onclick="likePost('${post._id}')">
-                ❤️ ${post.likes}
-            </button>
-
-            <button onclick="commentPost('${post._id}')">
-                💬 Comment
-            </button>
-
-            <button onclick="deletePost('${post._id}')">
-                🗑 Delete
-            </button>
-
-        </div>
-
-        ${commentsHTML}
-        `;
-
-        postsDiv.appendChild(div);
+  try {
+    const res = await fetch(`${API}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(postData)
     });
+
+    const data = await res.json();
+
+    addPostToUI(data);
+
+    document.querySelector(".post-input").value = "";
+    document.querySelector(".image-input").value = "";
+
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-async function createPost(){
+function addPostToUI(post) {
+  const div = document.createElement("div");
 
-    const username = document.getElementById("username").value;
+  div.classList.add("post-card");
 
-    const postInput = document.getElementById("postInput").value;
+  div.innerHTML = `
+    <div class="post-header">
+      <img src="https://i.pravatar.cc/40" class="post-avatar">
+      <h3>@${post.username}</h3>
+    </div>
 
-    if(username==="" || postInput===""){
-        alert("Fill all fields");
-        return;
+    <p class="post-text">${post.content}</p>
+
+    ${
+      post.image
+        ? `<img src="${post.image}" class="post-image">`
+        : ""
     }
 
-    await fetch(`${API}/posts`,{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            username,
-            content:postInput
-        })
-    });
+    <div class="post-actions">
+      <button onclick="likePost(this)">❤️ Like</button>
+      <button onclick="commentPost()">💬 Comment</button>
+      <button onclick="followUser()">➕ Follow</button>
+    </div>
+  `;
 
-    document.getElementById("postInput").value="";
-
-    loadPosts();
+  postContainer.prepend(div);
 }
 
-async function likePost(id){
-
-    await fetch(`${API}/like/${id}`,{
-        method:"PUT"
-    });
-
-    loadPosts();
+function likePost(btn) {
+  btn.innerHTML = "❤️ Liked";
 }
 
-async function commentPost(id){
-
-    const comment = prompt("Enter comment");
-
-    if(!comment) return;
-
-    await fetch(`${API}/comment/${id}`,{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            comment
-        })
-    });
-
-    loadPosts();
+function commentPost() {
+  alert("Comment feature coming soon");
 }
 
-async function deletePost(id){
-
-    await fetch(`${API}/posts/${id}`,{
-        method:"DELETE"
-    });
-
-    loadPosts();
+function followUser() {
+  alert("Followed user");
 }
 
-loadPosts();
+window.onload = async () => {
+  try {
+    const res = await fetch(`${API}/posts`);
+    const posts = await res.json();
+
+    posts.reverse().forEach(addPostToUI);
+
+  } catch (err) {
+    console.log(err);
+  }
+};

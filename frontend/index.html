@@ -1,177 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ConnectSphere</title>
+
   <link rel="stylesheet" href="style.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
 <div class="layout">
 
-    <aside class="sidebar">
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div>
+
+      <h1>ConnectSphere</h1>
+
+      <button class="nav-btn active">🏠 Home</button>
+      <button class="nav-btn">🔍 Explore</button>
+      <button class="nav-btn">❤️ Notifications</button>
+      <button class="nav-btn">💬 Messages</button>
+      <button class="nav-btn">🔖 Bookmarks</button>
+      <button class="nav-btn">👤 Profile</button>
+      <button class="nav-btn">⚙️ Settings</button>
+
+    </div>
+
+    <div>
+
+      <button class="create-btn">
+        ＋ Create Post
+      </button>
+
+      <div class="user-card">
+
+        <img
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200"
+        >
 
         <div>
-            <h1>ConnectSphere</h1>
+          <h4>poornasri_1720</h4>
+          <p>@poornasri_1720</p>
+        </div>
 
-            <button class="active">🏠 Home</button>
-            <button>🔍 Explore</button>
-            <button>❤️ Notifications</button>
-            <button>💬 Messages</button>
-            <button>🔖 Bookmarks</button>
-            <button>👤 Profile</button>
-            <button>⚙️ Settings</button>
+      </div>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN FEED -->
+
+  <main class="feed">
+
+    <!-- SEARCH -->
+
+    <div class="search-bar">
+
+      <input
+        type="text"
+        placeholder="Search ConnectSphere..."
+      >
+
+    </div>
+
+    <!-- STORIES -->
+
+    <div class="stories">
+
+      <div class="story">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100">
+        <span>Your Story</span>
+      </div>
+
+      <div class="story">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100">
+        <span>James</span>
+      </div>
+
+      <div class="story">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100">
+        <span>Sophia</span>
+      </div>
+
+      <div class="story">
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100">
+        <span>Rohit</span>
+      </div>
+
+      <div class="story">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100">
+        <span>Emma</span>
+      </div>
+
+    </div>
+
+    <!-- CREATE POST -->
+
+    <div class="create-post-box">
+
+      <div class="create-top">
+
+        <img
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100"
+        >
+
+        <textarea
+          id="postInput"
+          placeholder="What's on your mind, poornasri?"
+        ></textarea>
+
+      </div>
+
+      <input
+        type="text"
+        id="username"
+        placeholder="Username"
+        value="poornasri_1720"
+      >
+
+      <input
+        type="text"
+        id="imageInput"
+        placeholder="Paste image URL (optional)"
+      >
+
+      <button
+        class="post-btn"
+        onclick="createPost()"
+      >
+        Post
+      </button>
+
+    </div>
+
+    <!-- POSTS -->
+
+    <div id="posts" class="posts-container">
+
+      <!-- POSTS WILL LOAD HERE -->
+
+    </div>
+
+  </main>
+
+  <!-- RIGHTBAR -->
+
+  <aside class="rightbar">
+
+    <!-- PROFILE CARD -->
+
+    <div class="profile-card">
+
+      <div class="cover"></div>
+
+      <img
+        class="profile-pic"
+        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200"
+      >
+
+      <h2>poornasri_1720</h2>
+      <p>@poornasri_1720</p>
+
+      <span>Frontend Developer 🚀</span>
+
+      <div class="stats">
+
+        <div>
+          <h3>45</h3>
+          <p>Posts</p>
         </div>
 
         <div>
-            <button class="create-btn">＋ Create Post</button>
-
-            <div class="user-card">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200">
-                <div>
-                    <h4>poornasri_1720</h4>
-                    <p>@poornasri_1720</p>
-                </div>
-            </div>
+          <h3>120</h3>
+          <p>Followers</p>
         </div>
 
-    </aside>
-
-    <main class="feed">
-
-        <div class="search-bar">
-            <input type="text" placeholder="Search ConnectSphere...">
+        <div>
+          <h3>80</h3>
+          <p>Following</p>
         </div>
 
-        <div class="stories">
+      </div>
 
-            <div class="story">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100">
-                <span>Your Story</span>
-            </div>
+      <button class="edit-btn">
+        Edit Profile
+      </button>
 
-            <div class="story">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100">
-                <span>James</span>
-            </div>
+    </div>
 
-            <div class="story">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100">
-                <span>Sophia</span>
-            </div>
+    <!-- SUGGESTIONS -->
 
-            <div class="story">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100">
-                <span>Rohit</span>
-            </div>
+    <div class="suggest-box">
 
-            <div class="story">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100">
-                <span>Emma</span>
-            </div>
+      <h3>Who to follow</h3>
+
+      <div class="follow-user">
+
+        <div class="follow-left">
+
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100">
+
+          <div>
+            <h4>alex.dev</h4>
+            <p>@alex_dev</p>
+          </div>
 
         </div>
 
-        <div class="create-post-box">
+        <button onclick="followUser(this)">
+          Follow
+        </button>
 
-            <div class="create-top">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100">
+      </div>
 
-                <textarea
-                    id="postInput"
-                    placeholder="What's on your mind, poornasri?"
-                ></textarea>
-            </div>
+      <div class="follow-user">
 
-            <input
-                type="text"
-                id="username"
-                placeholder="Username"
-                value="poornasri_1720"
-            >
+        <div class="follow-left">
 
-            <input
-                type="text"
-                id="imageInput"
-                placeholder="Paste image URL (optional)"
-            >
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100">
 
-            <button onclick="createPost()">
-                Post
-            </button>
+          <div>
+            <h4>emma_21</h4>
+            <p>@emma_21</p>
+          </div>
 
         </div>
 
-        <div id="posts"></div>
+        <button onclick="followUser(this)">
+          Follow
+        </button>
 
-    </main>
+      </div>
 
-    <aside class="rightbar">
+    </div>
 
-        <div class="profile-card">
-
-            <div class="cover"></div>
-
-            <img class="profile-pic" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200">
-
-            <h2>poornasri_1720</h2>
-            <p>@poornasri_1720</p>
-            <span>Frontend Developer 🚀</span>
-
-            <div class="stats">
-                <div>
-                    <h3>45</h3>
-                    <p>Posts</p>
-                </div>
-
-                <div>
-                    <h3>120</h3>
-                    <p>Followers</p>
-                </div>
-
-                <div>
-                    <h3>80</h3>
-                    <p>Following</p>
-                </div>
-            </div>
-
-            <button>Edit Profile</button>
-
-        </div>
-
-        <div class="suggest-box">
-            <h3>Who to follow</h3>
-
-            <div class="follow-user">
-                <div class="follow-left">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100">
-                    <div>
-                        <h4>alex.dev</h4>
-                        <p>@alex_dev</p>
-                    </div>
-                </div>
-
-                <button>Follow</button>
-            </div>
-
-            <div class="follow-user">
-                <div class="follow-left">
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100">
-                    <div>
-                        <h4>emma_21</h4>
-                        <p>@emma_21</p>
-                    </div>
-                </div>
-
-                <button>Follow</button>
-            </div>
-        </div>
-
-    </aside>
+  </aside>
 
 </div>
 
