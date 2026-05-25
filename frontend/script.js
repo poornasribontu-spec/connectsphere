@@ -1,4 +1,4 @@
-const API = "http://localhost:5000";
+const API = "https://connectsphere-9181.onrender.com";
 
 const postsDiv = document.getElementById("posts");
 
